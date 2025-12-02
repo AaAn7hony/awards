@@ -4,6 +4,7 @@ html{
     background-size:cover;
     height:100vh;
     font-family: segoe ui;
+    cursor:default
 }
 
 body {
@@ -40,7 +41,6 @@ img{
 
 h1:hover, h4:hover, p:hover{
     color:rgb(255, 239, 146);
-    cursor:default
 }
 
 #dos{
