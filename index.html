@@ -13,7 +13,7 @@
     </section>
 
     <section id="dos">
-        <button>¡NOMINA AHORA!</button>
+        <button id="loginBtn">¡NOMINA AHORA!</button>
     </section>
 
     <footer>
@@ -41,6 +41,79 @@
       )
     `;
   });
+</script>
+
+    <script>
+        // Configuración de Discord OAuth (reemplaza con tus valores)
+        const CLIENT_ID = '1205103896796725278'; // Obtén esto de https://discord.com/developers/applications
+        const REDIRECT_URI = 'https://www.google.com'; // URL donde se redirige después del login, debe coincidir con la app de Discord
+        const SCOPE = 'identify'; // Solo necesitamos identificar al usuario
+
+        const loginBtn = document.getElementById('loginBtn');
+        const welcome = document.getElementById('welcome');
+        const login = document.getElementById('login');
+
+        let currentCategory = 0;
+        let userId = null;
+
+        // Función para validar si es un link de Discord
+        function isDiscordLink(url) {
+            return url.startsWith('https://discord.com/') || url.startsWith('https://discordapp.com/');
+        }
+
+        // Verificar si ya hay un token en la URL (después del redirect)
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        if (code) {
+            // Intercambiar code por access token
+            fetch('https://discord.com/api/oauth2/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    client_id: CLIENT_ID,
+                    client_secret: 'TU_CLIENT_SECRET', // Mantén esto secreto, no lo pongas en el frontend
+                    grant_type: 'authorization_code',
+                    code: code,
+                    redirect_uri: REDIRECT_URI,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.access_token) {
+                    // Obtener info del usuario
+                    return fetch('https://discord.com/api/users/@me', {
+                        headers: {
+                            Authorization: `Bearer ${data.access_token}`,
+                        },
+                    });
+                } else {
+                    throw new Error('Error en autenticación');
+                }
+            })
+            .then(response => response.json())
+            .then(user => {
+                userId = user.id;
+                userNameSpan.textContent = user.username;
+                login.style.display = 'none';
+                welcome.style.display = 'block';
+                // Verificar si ya envió
+                if (localStorage.getItem(`submitted_${userId}`)) {
+                    alert('Ya has enviado tus nominaciones.');
+                    return;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error en el login. Intenta de nuevo.');
+            });
+        }
+
+        loginBtn.addEventListener('click', () => {
+            // Redirigir a Discord OAuth
+            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=${SCOPE}`;
+        });
 </script>
     
 </body>
