@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Awars 2025 - Among Us Español</title>
-    <!-- Incluir EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         body {
-            font-family: 'Georgia', serif; 
-            background: linear-gradient(135deg, #000000, #1a1a1a); 
-            color: #FFD700; 
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            color: #FFD700;
             margin: 0;
             padding: 0;
             display: flex;
@@ -18,20 +16,17 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); 
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         .container {
             text-align: center;
             max-width: 600px;
             width: 100%;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.8); 
+            background: rgba(0, 0, 0, 0.8);
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); 
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
             border: 2px solid #FFD700;
-        }
-        .welcome {
-            animation: fadeIn 1s ease-in-out;
         }
         .category {
             display: none;
@@ -51,13 +46,8 @@
             font-size: 16px;
             box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.2);
         }
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #FFA500; 
-            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-        }
         button {
-            background: linear-gradient(45deg, #FFD700, #FFA500); 
+            background: linear-gradient(45deg, #FFD700, #FFA500);
             color: #000000;
             border: none;
             padding: 15px 30px;
@@ -68,7 +58,7 @@
             font-size: 16px;
             text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-            transition: all 0.3s ease;
+            transition: 0.3s ease;
         }
         button:hover {
             background: linear-gradient(45deg, #FFA500, #FFD700);
@@ -80,10 +70,6 @@
             margin-bottom: 20px;
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -93,159 +79,145 @@
             to { transform: translateX(-100%); opacity: 0; }
         }
     </style>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("_51MzCi8b6ZvjIY0M");
+    </script>
 </head>
+
 <body>
+
     <div class="container">
+
         <div id="form">
-            <!-- Categorías -->
+
             <div class="category active" id="cat1">
                 <h2>Mejor jugador</h2>
-                <textarea id="mejorJugador" placeholder="Escribe tu nominación aquí..."></textarea>
+                <textarea id="mejorJugador"></textarea>
                 <button class="nextBtn">Siguiente</button>
             </div>
+
             <div class="category" id="cat2">
                 <h2>Mejor evento</h2>
-                <textarea id="mejorEvento" placeholder="Escribe tu nominación aquí..."></textarea>
+                <textarea id="mejorEvento"></textarea>
                 <button class="nextBtn">Siguiente</button>
             </div>
+
             <div class="category" id="cat3">
                 <h2>Juego favorito</h2>
-                <textarea id="juegoFavorito" placeholder="Escribe tu nominación aquí..."></textarea>
+                <textarea id="juegoFavorito"></textarea>
                 <button class="nextBtn">Siguiente</button>
             </div>
+
             <div class="category" id="cat4">
                 <h2>MVP</h2>
-                <textarea id="mvp" placeholder="Escribe tu nominación aquí..."></textarea>
+                <textarea id="mvp"></textarea>
                 <button class="nextBtn">Siguiente</button>
             </div>
+
             <div class="category" id="cat5">
                 <h2>Usuario favorito</h2>
-                <textarea id="usuarioFavorito" placeholder="Escribe tu nominación aquí..."></textarea>
+                <textarea id="usuarioFavorito"></textarea>
                 <button class="nextBtn">Siguiente</button>
             </div>
+
             <div class="category" id="cat6">
                 <h2>Artista del año</h2>
-                <textarea id="artistaAno" placeholder="Escribe tu nominación aquí..."></textarea>
+                <textarea id="artistaAno"></textarea>
                 <button class="nextBtn">Siguiente</button>
             </div>
+
             <div class="category" id="cat7">
                 <h2>Dibujo del año</h2>
-                <input type="url" id="dibujoAno" placeholder="Pega el link de Discord aquí...">
+                <input type="url" id="dibujoAno" placeholder="Link de Discord">
                 <button class="nextBtn">Siguiente</button>
             </div>
+
             <div class="category" id="cat8">
                 <h2>Mejor clip</h2>
-                <input type="url" id="mejorClip" placeholder="Pega el link de Discord aquí...">
+                <input type="url" id="mejorClip" placeholder="Link de Discord">
                 <button id="submitBtn">Enviar Nominaciones</button>
             </div>
+
         </div>
     </div>
 
-    <script>
-        // Configuración de EmailJS (reemplaza con tus valores)
-        const EMAILJS_SERVICE_ID = 'service_sofoc59'; // ID del servicio en EmailJS
-        const EMAILJS_TEMPLATE_ID = 'template_si8isbd'; // ID de la plantilla de email (configurada para enviar a Gmail)
-        const EMAILJS_PUBLIC_KEY = '_51MzCi8b6ZvjIY0M'; // Clave pública de EmailJS
 
-        const form = document.getElementById('form');
-        const categories = document.querySelectorAll('.category');
-        const nextBtns = document.querySelectorAll('.nextBtn');
-        const submitBtn = document.getElementById('submitBtn');
+<script>
+    const categories = document.querySelectorAll('.category');
+    const nextBtns = document.querySelectorAll('.nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
 
-        let currentCategory = 0;
-        let userId = null;
+    let currentCategory = 0;
 
-        // Inicializar EmailJS
-        emailjs.init(EMAILJS_PUBLIC_KEY);
+    function isDiscordLink(url) {
+        return url.startsWith('https://discord.com/') || url.startsWith('https://discordapp.com/');
+    }
 
-        // Función para validar si es un link de Discord
-        function isDiscordLink(url) {
-            return url.startsWith('https://discord.com/') || url.startsWith('https://discordapp.com/');
-        }
-
-        // Verificar si hay un código en la URL (después del redirect del link externo)
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        if (code) {
-            // Usar el código como identificador de usuario (asumiendo que es el ID de Discord)
-            userId = code;
-            // Verificar si ya envió con este código
-            if (localStorage.getItem(`submitted_${userId}`)) {
-                alert('Ya has enviado tus nominaciones.');
-                return;
-            }
-        }
-
-        nextBtns.forEach((btn, index) => {
-            btn.addEventListener('click', () => {
-                const input = categories[currentCategory].querySelector('input, textarea');
-                if (!input.value.trim()) {
-                    alert('Por favor, completa esta categoría antes de continuar.');
-                    return;
-                }
-                // Validación adicional para links de Discord
-                if (input.type === 'url' && !isDiscordLink(input.value)) {
-                    alert('Por favor, ingresa un link válido de Discord.');
-                    return;
-                }
-                // Animación de salida
-                categories[currentCategory].style.animation = 'slideOut 0.5s ease-in-out';
-                setTimeout(() => {
-                    categories[currentCategory].classList.remove('active');
-                    currentCategory++;
-                    if (currentCategory < categories.length) {
-                        categories[currentCategory].classList.add('active');
-                    }
-                }, 500);
-            });
-        });
-
-        submitBtn.addEventListener('click', () => {
-            if (!userId) {
-                alert('Debes verificar con el link externo primero.');
-                return;
-            }
+    nextBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
             const input = categories[currentCategory].querySelector('input, textarea');
+
             if (!input.value.trim()) {
-                alert('Por favor, completa esta categoría antes de enviar.');
+                alert('Por favor, completa esta categoría.');
                 return;
             }
-            // Validación adicional para links de Discord
+
             if (input.type === 'url' && !isDiscordLink(input.value)) {
-                alert('Por favor, ingresa un link válido de Discord.');
+                alert('Ingresa un link válido de Discord.');
                 return;
             }
-            // Verificar si ya envió con este código
-            if (localStorage.getItem(`submitted_${userId}`)) {
-                alert('Ya has enviado tus nominaciones.');
-                return;
-            }
-            // Recopilar datos
-            const nominations = {
-                userId: userId,
-                mejorJugador: document.getElementById('mejorJugador').value,
-                mejorEvento: document.getElementById('mejorEvento').value,
-                juegoFavorito: document.getElementById('juegoFavorito').value,
-                mvp: document.getElementById('mvp').value,
-                usuarioFavorito: document.getElementById('usuarioFavorito').value,
-                artistaAno: document.getElementById('artistaAno').value,
-                dibujoAno: document.getElementById('dibujoAno').value,
-                mejorClip: document.getElementById('mejorClip').value
-            };
-            // Enviar email con EmailJS (configurado para enviar a Gmail)
-            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, nominations)
-                .then((response) => {
-                    console.log('Email enviado:', response);
-                    // Marcar como enviado
-                    localStorage.setItem(`submitted_${userId}`, 'true');
-                    alert('¡Nominaciones enviadas exitosamente!');
-                    // Reiniciar o redirigir
-                    location.reload();
-                }, (error) => {
-                    console.error('Error al enviar email:', error);
-                    alert('Error al enviar. Intenta de nuevo.');
-                });
+
+            categories[currentCategory].style.animation = 'slideOut 0.5s ease-in-out';
+
+            setTimeout(() => {
+                categories[currentCategory].classList.remove('active');
+                currentCategory++;
+
+                if (currentCategory < categories.length) {
+                    categories[currentCategory].classList.add('active');
+                }
+            }, 500);
         });
-    </script>
+    });
+
+    submitBtn.addEventListener('click', () => {
+        const input = categories[currentCategory].querySelector('input, textarea');
+
+        if (!input.value.trim()) {
+            alert('Completa esta categoría antes de enviar.');
+            return;
+        }
+
+        if (input.type === 'url' && !isDiscordLink(input.value)) {
+            alert('Ingresa un link válido de Discord.');
+            return;
+        }
+
+        const nominations = {
+            mejorJugador: document.getElementById('mejorJugador').value,
+            mejorEvento: document.getElementById('mejorEvento').value,
+            juegoFavorito: document.getElementById('juegoFavorito').value,
+            mvp: document.getElementById('mvp').value,
+            usuarioFavorito: document.getElementById('usuarioFavorito').value,
+            artistaAno: document.getElementById('artistaAno').value,
+            dibujoAno: document.getElementById('dibujoAno').value,
+            mejorClip: document.getElementById('mejorClip').value
+        };
+
+        emailjs.send("service_sofoc59", "template_si8isbd", nominations) 
+        .then(() => {
+            alert("¡Nominaciones enviadas correctamente!");
+            location.reload();
+        })
+        .catch((error) => {
+            alert("Error al enviar. Intenta de nuevo.");
+            console.error(error);
+        });
+    });
+</script>
+
 </body>
 </html>
